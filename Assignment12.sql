@@ -72,18 +72,26 @@ ORDER BY `total spent` DESC
 LIMIT 3;
 
 -- Q5
+/* Q5: Modify the query from Q4 
+to separate the orders not just 
+by customer, but also by date 
+so they can see how much 
+each customer is ordering 
+on which date. */
 
-SELECT 
+SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+select 
 u.user_id,
 u.first_name,
 u.last_name,
 CAST(order_time AS DATE) AS `order date`,
 SUM(price) AS `daily total`
-
-FROM pizzas p
-JOIN pizza_orders po USING (pizza_id)
-JOIN orders o USING (order_id)
-JOIN user_orders uo USING (order_id)
-JOIN users u USING (user_id)
+FROM
+orders o
+join pizza_orders po USING (order_id)
+join pizzas p using (pizza_id)
+join user_orders uo on uo.order_id = o.order_id
+join users u on u.user_id = uo.user_id
 
 group by order_time;
