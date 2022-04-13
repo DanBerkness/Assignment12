@@ -1,3 +1,4 @@
+
 CREATE DATABASE pizza_orders;
 USE pizza_orders;
 
@@ -94,4 +95,9 @@ join pizzas p using (pizza_id)
 join user_orders uo on uo.order_id = o.order_id
 join users u on u.user_id = uo.user_id
 
-group by order_time;
+group by u.user_id
+order by `daily total` desc;
+
+
+ 
+ 
