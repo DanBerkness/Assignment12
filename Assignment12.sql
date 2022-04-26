@@ -9,7 +9,7 @@ user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
  );
  
 INSERT INTO users
-VALUES(DEFAULT,'226-555-4982', 'Trevor', 'Page'),
+VALUES(DEFAULT,'226-555-4982', 'Trevor', 'Page'),orders
 (DEFAULT, '555-555-9498', 'John', 'Doe');
 
 CREATE TABLE pizzas (pizza_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, pizza_type varchar(25), price Decimal(12,2));
@@ -94,5 +94,5 @@ join pizzas p using (pizza_id)
 join user_orders uo on uo.order_id = o.order_id
 join users u on u.user_id = uo.user_id
 
-group by u.user_id, o.order_time
+group by u.user_id, CAST(order_time AS DATE)
 order by `daily total` desc;
